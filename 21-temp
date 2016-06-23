@@ -1,0 +1,38 @@
+#!/bin/bash
+#title			: /etc/update-motd.d/21-temp
+#description	: This Script will output the CPU Temp for each Core
+#author			: SHelfinger
+#date			: 20160620
+#version		: 0.1    
+#usage			: bash 21-temp OR ./21-temp
+#notes			: It's colorful, be aware that some apps needs to be installed, see depencies
+#bash_version	: 4.3.30(1)-release
+#depencies		: sensors (sudo apt-get install lm-sensors)
+#installation	: chmod +x 21-temp | mv 20-cpu /etc/update-motd.d/21-temp
+#license		: GPLv3
+#==============================================================================
+SENSORS=$(which sensors)
+i=1
+
+getStyle () {
+	if [ "$1" -ge "$3" ]; then
+    	tempcolor="\033[01;31m"
+    elif [ "$1" -ge "$2" ]; then
+    	tempcolor="\033[01;34m"
+    elif [ "$1" -ge "30" ]; then
+    	tempcolor="\033[01;32m"
+    else
+    	tempcolor="\033[0m"
+    fi
+    echo -en "\033[0mCore$4: $tempcolor$1° "
+}
+
+$SENSORS | grep Core | tr -d '(),' | awk '{print $3"\t"$7"\t"$11}' | while read output;
+do 
+	NormalTemp=$(echo $output | awk '{print $1}' | cut -f1 -d"." | tr -dc '[:alnum:]\n\r')
+    HighTemp=$(echo $output | awk '{print $2}' | cut -f1 -d"." | tr -dc '[:alnum:]\n\r')
+    CritTemp=$(echo $output | awk '{print $3}' | cut -f1 -d"." | tr -dc '[:alnum:]\n\r')
+    getStyle $NormalTemp $HighTemp $CritTemp $i
+    ((i++))
+done
+echo
