@@ -1,0 +1,28 @@
+#!/bin/bash
+#title			: /etc/update-motd.d/30-hdd
+#description	: This Script will output the HDD Information
+#author			: SHelfinger
+#date			: 20160620
+#version		: 0.1    
+#usage			: bash 30-hdd OR ./30-hdd
+#notes			: It's colorful, be aware that some apps needs to be installed, see depencies
+#bash_version	: 4.3.30(1)-release
+#depencies		: Nothing (Normal Installation)
+#installation	: chmod +x 30-hdd | mv 30-hdd /etc/update-motd.d/30-hdd
+#license		: MIT
+#==============================================================================
+TAB="|"
+BEGIN="["
+END="]"
+
+df -H | grep -vE '^Filesystem|tmpfs|cdrom|cgmfs|fuse|udev' | awk '{ print $5 " " $1 }' | sort -t" " -k 2 | while read output;
+do
+  usep=$(echo $output | awk '{ print $1}' | cut -d'%' -f1)
+  partition=$(echo $output | awk '{ print $2 }' )
+  free=$((100-$usep))
+  echo -en "\033[1;33mHDD \033[1;32m$partition \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
+  for((i=0;i<usep;i++)); do echo -en "\033[01;31mI"; done
+  for((i=0;i<free;i++)); do echo -en "\033[0mI"; done
+  echo -en "\033[0m$END"
+  echo -en " $usep%/$free%\n"
+done
