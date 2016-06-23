@@ -1,0 +1,68 @@
+#!/bin/bash
+#title			: /etc/update-motd.d/20-cpu
+#description	: This Script will output the CPU Load for each Core
+#author			: SHelfinger
+#date			: 20160620
+#version		: 0.1    
+#usage			: bash 20-cpu OR ./20-cpu
+#notes			: It's colorful, be aware that some apps needs to be installed, see depencies
+#bash_version	: 4.3.30(1)-release
+#depencies		: mpstat (sudo apt-get install sysstat)
+#				: bc (sudo apt-get install bc)
+# 				: python (sudo apt-get install python)
+#installation	: chmod +x 20-cpu | mv 20-cpu /etc/update-motd.d/20-cpu
+#license		: GPLv3
+#==============================================================================
+TAB="|"
+BEGIN="["
+END="]"
+GREP=$(which grep)
+MPSTAT=$(which mpstat)
+BC=$(which bc)
+PYTHON=$(which python)
+c=1
+
+$MPSTAT -P ALL 2 1 | sed -n '4p' | while read output;
+do 
+    user=$(echo $output | awk '{print $3}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    system=$(echo $output | awk '{print $5}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    idle=$(echo $output | awk '{print $12}')
+    idles=$($BC <<< "100 - $idle")
+    usep=$(echo "$idles" | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    
+    echo -en "\033[1;33mCPU \033[1;32mALL \033[0m(\033[01;31mLoad\033[0m/\033[0mIdle) $BEGIN"
+    all=$(($user + $nice + $system + $iowait))
+    free=$((100 - $all))
+    for((i=0;i<$user;i++)); do echo -en "\033[1;34mI"; done
+    for((i=0;i<$nice;i++)); do echo -en "\033[1;32mI"; done
+    for((i=0;i<$system;i++)); do echo -en "\033[01;31mI"; done
+    for((i=0;i<$iowait;i++)); do echo -en "\033[01;33mI"; done
+    for((i=0;i<$free;i++)); do echo -en "\033[0mI"; done
+    echo -en "\033[0m$END"
+    echo -en " $all%/$free%\n"
+done
+
+$MPSTAT -P ALL | tail -n +5 | while read output;
+do 
+    user=$(echo $output | awk '{print $3}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    nice=$(echo $output | awk '{print $4}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    system=$(echo $output | awk '{print $5}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    iowait=$(echo $output | awk '{print $6}' | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    idle=$(echo $output | awk '{print $12}')
+    idles=$($BC <<< "100 - $idle")
+    usep=$(echo "$idles" | $PYTHON -c "from decimal import *; print(int(Decimal(raw_input()).quantize(Decimal('1.'), rounding=ROUND_UP)))")
+    
+    echo -en "\033[1;33m     \033[1;32m$(printf %02d $c) \033[0m(\033[01;31mLoad\033[0m/\033[0mIdle) $BEGIN"
+    all=$(($user + $nice + $system + $iowait))
+    free=$((100 - $all))
+    for((i=0;i<$user;i++)); do echo -en "\033[1;34mI"; done
+    for((i=0;i<$nice;i++)); do echo -en "\033[1;32mI"; done
+    for((i=0;i<$system;i++)); do echo -en "\033[01;31mI"; done
+    for((i=0;i<$iowait;i++)); do echo -en "\033[01;33mI"; done
+    for((i=0;i<$free;i++)); do echo -en "\033[0mI"; done
+    echo -en "\033[0m$END"
+    echo -en " $all%/$free%\n"
+    ((c++))
+done
