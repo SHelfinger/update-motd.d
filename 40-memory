@@ -1,0 +1,56 @@
+#!/bin/bash
+#title			: /etc/update-motd.d/40-memory
+#description	: This Script will output the memory information
+#author			: SHelfinger
+#date			: 20160620
+#version		: 0.1    
+#usage			: bash 40-memory OR ./40-memory
+#notes			: It's colorful, be aware that some apps needs to be installed, see depencies
+#bash_version	: 4.3.30(1)-release
+#depencies		: bc (sudo apt-get install bc)
+#installation	: chmod +x 40-memory | mv 40-memory /etc/update-motd.d/40-memory
+#license		: GPLv3
+#==============================================================================
+TAB="|"
+BEGIN="["
+END="]"
+BC=$(which bc)
+
+FREE=`free | grep Mem | awk '{print $4}'`
+CACHE=`free | grep Mem | awk '{print $7}'`
+BUFFERS=`free | grep Mem | awk '{print $6}'`
+SHARED=`free | grep Mem | awk '{print $5}'`
+USED=`free | grep Mem | awk '{print $3}'`
+TOTAL=`free | grep Mem | awk '{print $2}'`
+
+CALCF=`printf "%.0f" $(echo "scale=2; $FREE / $TOTAL * 100.0" | $BC)`
+CALCB=`printf "%.0f" $(echo "scale=2; $BUFFERS/$TOTAL * 100.0" | $BC)`
+CALCC=`printf "%.0f" $(echo "scale=2; $CACHE/$TOTAL * 100.0" | $BC)`
+CALCS=`printf "%.0f" $(echo "scale=2; $SHARED/$TOTAL * 100.0" | $BC)`
+CALCU=`printf "%.0f" $(echo "scale=2; ($TOTAL - $CACHE - $BUFFERS - $SHARED - $FREE) / $TOTAL * 100.0" | $BC)`
+TCALCU=`echo "$CALCB + $CALCS + $CALCU" | $BC`
+TCALCF=`echo "100 - $TCALCU" | $BC`
+TCALCSF=`echo "$TCALCU + $CALCC" | $BC`
+TCALCFF=`echo "100 - $TCALCSF" | $BC`
+
+SFREE=`printf "%.0f" $(free | grep Swap | awk '{print $4/$2 * 100.0}' | $BC)`
+SUSED=`printf "%.0f" $(free | grep Swap | awk '{print $3/$2 * 100.0}' | $BC)`
+
+echo -en "\033[1;33mMemory \033[0m(\033[1;34mMem\033[0m) \033[0m(\033[1;32mU\033[01;34mB\033[1;31mS\033[1;33mC\033[0m/\033[0mFree) $BEGIN"
+
+for((i=0;i<CALCU;i++)); do echo -en "\033[1;32mI"; done
+for((i=0;i<CALCB;i++)); do echo -en "\033[01;34mI"; done
+for((i=0;i<CALCS;i++)); do echo -en "\033[1;31mI"; done
+for((i=0;i<CALCC;i++)); do echo -en "\033[1;33mI"; done
+for((i=0;i<TCALCFF;i++)); do echo -en "\033[0mI"; done
+
+echo -en "$END"
+echo -en " $TCALCU%/$TCALCF%\n"
+
+echo -en "\033[1;33mMemory \033[0m(\033[1;34mSwap\033[0m) \033[0m(\033[01;31mUsage\033[0m/\033[0mFree) $BEGIN"
+
+for((i=0;i<SUSED;i++)); do echo -en "\033[01;31mI"; done
+for((i=0;i<SFREE;i++)); do echo -en "\033[0mI"; done
+
+echo -en "$END"
+echo -en " $SUSED%/$SFREE%\n"
