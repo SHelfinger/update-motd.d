@@ -1,6 +1,6 @@
 #!/bin/bash
 #title			: /etc/update-motd.d/60-lastlogin
-#description	: This Script will output the memory information
+#description	  : This Script will output the last login access
 #author			: SHelfinger
 #date			: 20160620
 #version		: 0.1    
