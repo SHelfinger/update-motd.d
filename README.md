@@ -9,6 +9,16 @@ All our files are GPLv3
 
 ## Content
 
+##### Table of contents
+[All together](https://github.com/SHelfinger/update-motd.d#all-together)
+[10-version](https://github.com/SHelfinger/update-motd.d#10-version)
+[20-cpu](https://github.com/SHelfinger/update-motd.d#20-cpu)
+[30-hdd](https://github.com/SHelfinger/update-motd.d#30-hdd)
+[40-memory](https://github.com/SHelfinger/update-motd.d#40-memory)
+[50-systop](https://github.com/SHelfinger/update-motd.d#50-systop)
+[50-lastlogin](https://github.com/SHelfinger/update-motd.d#60-lastlogin)
+[90-fail2ban](https://github.com/SHelfinger/update-motd.d#90-fail2ban)
+
 ### All together
 We have created some more features where aren't in this git. When you really need it, send us a mail/message.
 ![100-all](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/100-all.png "100-all")
@@ -18,7 +28,6 @@ This .sh will output the Distribution, Version Number (Code name, Kernel, Archit
 
 Debian output:
 ```shell
-SHelfinger@debian /etc/update-motd.d # ./10-version
 Linux Debian 8.5 (jessie 4.4.8-1-pve x86_64)
 ```
 
