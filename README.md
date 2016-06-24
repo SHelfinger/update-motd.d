@@ -20,6 +20,27 @@ cp 90-fail2ban /etc/update-motd.d/90-fail2ban
 ```
 (Remember on some .sh files you need special programs, usually bc and crudini)
 
+Now we need to tell your SSH Daemon that he needs to get the `/run/motd` file.
+
+Make first sure that SSHD is restarted (`service sshd restart`) then check is motd updated (`cat /run/motd`)
+
+When you see your motd, perfectly now we insert this in your pam.d settings.
+
+Switching the folder
+`cd /etc/pam.d/`
+
+Open the file sshd
+`sudo nano /etc/pam.d/sshd`
+
+Change 
+`session    optional     pam_motd.so  motd=/run/motd.dynamic`
+TO
+`session    optional     pam_motd.so  motd=/run/motd`
+
+CTRL+O AND CTRL +X
+
+Now reloggin in your Server
+
 ## Content
 
 ##### Table of contents
