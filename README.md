@@ -4,11 +4,11 @@ Hello this is our /etc/update-motd.d folder. You can download it in your distrib
 ```shell
 git clone https://github.com/SHelfinger/update-motd.d/ ~/
 ```
-This command will add the complete git repo inside your home folder (cd ~/)
+This command will add the complete git repo inside your home folder (`cd ~/`)
 
-Usually you have already the chmod +x on all files, but when this isn't please make them executionable (chmod +x *-*) inside the folder.
+Usually you have already the chmod +x on all files, but when this isn't please make them executionable (`chmod +x *-*`) inside the folder.
 
-As you are done with testing each .sh file (./10-version etc) feel free to install it
+As you are done with testing each .sh file (`./10-version` etc) feel free to install it
 ```shell
 cp 10-version /etc/update-motd.d/10-version
 cp 20-cpu /etc/update-motd.d/20-cpu
