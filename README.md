@@ -11,18 +11,28 @@ All our files are GPLv3
 
 ##### Table of contents
 [All together](https://github.com/SHelfinger/update-motd.d#all-together)
+
 [10-version](https://github.com/SHelfinger/update-motd.d#10-version)
+
 [20-cpu](https://github.com/SHelfinger/update-motd.d#20-cpu)
+
 [30-hdd](https://github.com/SHelfinger/update-motd.d#30-hdd)
+
 [40-memory](https://github.com/SHelfinger/update-motd.d#40-memory)
+
 [50-systop](https://github.com/SHelfinger/update-motd.d#50-systop)
+
 [50-lastlogin](https://github.com/SHelfinger/update-motd.d#60-lastlogin)
+
 [90-fail2ban](https://github.com/SHelfinger/update-motd.d#90-fail2ban)
 
+
+---
 ### All together
 We have created some more features where aren't in this git. When you really need it, send us a mail/message.
 ![100-all](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/100-all.png "100-all")
 
+---
 ### 10-version
 This .sh will output the Distribution, Version Number (Code name, Kernel, Architecture)
 
@@ -34,6 +44,7 @@ Linux Debian 8.5 (jessie 4.4.8-1-pve x86_64)
 Screenshot:
 ![10-version](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/10-version.png "10-version")
 
+---
 ### 20-cpu
 This .sh will out all and each core % load. The histogram is User, Nice, System, I/O Wait and Free)
 
@@ -53,6 +64,7 @@ CPU ALL (Load/Idle) [IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 Screenshot:
 ![20-cpu](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/20-cpu.png "20-cpu")
 
+---
 ### 30-hdd
 This .sh will output all hard disc's with usage/free diagram.
 
@@ -66,6 +78,7 @@ HDD /dev/md3 (Usage/Free) [IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 Screenshot:
 ![30-cpu](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/30-hdd.png "30-hdd")
 
+---
 ### 40-memory
 This .sh will output the usage of the memory (User, Buffers, System and Cache)
 
@@ -78,6 +91,7 @@ Memory (Swap) (Usage/Free) [IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 Screenshot:
 ![40-memory](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/40-memory.png "40-memory")
 
+---
 ### 50-systop
 This .sh will output your system network information (Hostname, DNS, FQDN and IP)
 
@@ -89,6 +103,7 @@ Hostname proxmox DNS shelfinger.eu FQDN proxmox.shelfinger.eu IP 144.76.32.43
 Screenshot:
 ![50-systop](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/50-systop.png "50-systop")
 
+---
 ### 60-lastlogin
 This .sh will output the last login access and currently IP
 
@@ -100,6 +115,7 @@ Current IP: 41.207.182.235 Last IP: 41.207.182.235 Last Access: Thu Jun 23 20:35
 Screenshot:
 ![60-lastlogin](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/60-lastlogin.png "60-lastlogin")
 
+---
 ### 90-fail2ban
 This .sh will output the Top 10 from todays bans.
 
