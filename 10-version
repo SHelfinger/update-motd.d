@@ -14,6 +14,7 @@
 OS=`uname -s`
 MACH=`uname -m`
 CRUDINI=$(which crudini)
+VERSION_REGULAR_EXPRESSION="^[0-9]+([.][0-9]+)?$"
 
 if [ "${OS}" = "SunOS" ] ; then
 	OS=Solaris
@@ -26,7 +27,7 @@ elif [ "${OS}" = "Linux" ] ; then
     if [ -f /etc/os-release ] && [ -f $CRUDINI ] ; then
     	DIST=`$CRUDINI --get --format=sh /etc/os-release "" NAME | tr -d 'NAME="' | tr -d '"' | tr -d "'" | cut -d ' ' -f 1`
         TREV=`cat /etc/*_version`
-        if [ -z "$TREV" ] ; then
+        if [ -z "$TREV" ] && ! [[ "$TREV" =~ $VERSION_REGULAR_EXPRESSION ]] ; then
         	REV=`grep VERSION= /etc/os-release | cut -d ' ' -f 1 | tr -d 'VERSION="'`
         else
         	REV=$TREV
