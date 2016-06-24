@@ -1,11 +1,24 @@
 # update-motd.d
-Linux motd updater
 
-This is our update-motd.d folder for a better overview of the health of your Linux Server.
+Hello this is our /etc/update-motd.d folder. You can download it in your distribution with the git command
+```shell
+git clone https://github.com/SHelfinger/update-motd.d/ ~/
+```
+This command will add the complete git repo inside your home folder (cd ~/)
 
-You can fork and exdent it.
+Usually you have already the chmod +x on all files, but when this isn't please make them executionable (chmod +x *-*) inside the folder.
 
-All our files are GPLv3
+As you are done with testing each .sh file (./10-version etc) feel free to install it
+```shell
+cp 10-version /etc/update-motd.d/10-version
+cp 20-cpu /etc/update-motd.d/20-cpu
+cp 21-temp /etc/update-motd.d/21-temp
+cp 30-hdd /etc/update-motd.d/30-hdd
+cp 40-memory /etc/update-motd.d/40-memory
+cp 50-lastlogin /etc/update-motd.d/50-lastlogin
+cp 90-fail2ban /etc/update-motd.d/90-fail2ban
+```
+(Remember on some .sh files you need special programs, usually bc and crudini)
 
 ## Content
 
@@ -45,13 +58,6 @@ Linux Debian 8.5 (jessie 4.4.8-1-pve x86_64)
 
 Screenshot:
 ![10-version](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/10-version.png "10-version")
-
-| Distribution | Version | Checked  |
-| :--- | :---: | ---: |
-| Debian | 8.5 | ✓ |
-| CentOS | 6 | ✓ |
-| Ubuntu | 16.04¹ | ✓ |
-¹) Needs crudini installed (sudo apt-get install crudini)
 
 ---
 ### 20-cpu
