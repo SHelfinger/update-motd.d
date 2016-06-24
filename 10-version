@@ -24,26 +24,21 @@ elif [ "${OS}" = "AIX" ] ; then
 	OSSTR="${OS} `oslevel` (`oslevel -r`)"
 elif [ "${OS}" = "Linux" ] ; then
 	KERNEL=`uname -r`
-    if [ -f /etc/os-release ] && [ -f $CRUDINI ] ; then
-    	DIST=`$CRUDINI --get --format=sh /etc/os-release "" NAME | tr -d 'NAME="' | tr -d '"' | tr -d "'" | cut -d ' ' -f 1`
-        TREV=`cat /etc/*_version`
-        if [ -z "$TREV" ] && ! [[ "$TREV" =~ $VERSION_REGULAR_EXPRESSION ]] ; then
-        	REV=`grep VERSION= /etc/os-release | cut -d ' ' -f 1 | tr -d 'VERSION="'`
-        else
-        	REV=$TREV
-        fi
-        PSUEDONAME=`grep VERSION= /etc/os-release | cut -d '(' -f 2 | tr -d ')"'`
+    if [ -f /etc/lsb-release ] ; then
+    	DIST=`$CRUDINI --get --format=sh /etc/lsb-release "" DISTRIB_ID | tr -d 'DISTRIB_ID="'`
+        REV=`$CRUDINI --get --format=sh /etc/lsb-release "" DISTRIB_RELEASE | tr -d 'DISTRIB_RELEASE="'`
+        PSUEDONAME=`$CRUDINI --get --format=sh /etc/lsb-release "" DISTRIB_CODENAME | tr -d 'DISTRIB_CODENAME="'`
 	elif [ -f /etc/redhat-release ] ; then
 		DIST=`cat /etc/redhat-release | awk '{print $1}'`
-		PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
 		REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+		PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
 	elif [ -f /etc/SUSE-release ] ; then
 		DIST=`cat /etc/SUSE-release | tr "\n" ' '| sed s/VERSION.*//`
 		REV=`cat /etc/SUSE-release | tr "\n" ' ' | sed s/.*=\ //`
 	elif [ -f /etc/mandrake-release ] ; then
 		DIST='Mandrake'
-		PSUEDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
 		REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
+		PSUEDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
 	elif [ -f /etc/debian_version ] ; then
 		DIST="Debian"
 		REV=`cat /etc/debian_version`
