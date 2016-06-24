@@ -46,6 +46,13 @@ Linux Debian 8.5 (jessie 4.4.8-1-pve x86_64)
 Screenshot:
 ![10-version](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/10-version.png "10-version")
 
+| Distribution | Version | Checked  |
+| --- | --- | ---|
+| Debian | 8.5 | ✓ |
+| CentOS | 6 | ✓ |
+| Ubuntu | 16.04* | ✓ |
+* Needs crudini installed (sudo apt-get install crudini)
+
 ---
 ### 20-cpu
 This .sh will output all and each core % load. The histogram is User, Nice, System, I/O Wait and Free)
