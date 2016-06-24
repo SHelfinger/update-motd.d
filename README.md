@@ -47,11 +47,11 @@ Screenshot:
 ![10-version](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/10-version.png "10-version")
 
 | Distribution | Version | Checked  |
-| --- | --- | ---|
+| :--- | :---: | ---: |
 | Debian | 8.5 | ✓ |
 | CentOS | 6 | ✓ |
-| Ubuntu | 16.04* | ✓ |
-* Needs crudini installed (sudo apt-get install crudini)
+| Ubuntu | 16.04¹ | ✓ |
+¹) Needs crudini installed (sudo apt-get install crudini)
 
 ---
 ### 20-cpu
