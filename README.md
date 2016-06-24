@@ -16,6 +16,8 @@ All our files are GPLv3
 
 [20-cpu](https://github.com/SHelfinger/update-motd.d#20-cpu)
 
+[21-temp](https://github.com/SHelfinger/update-motd.d#21-temp)
+
 [30-hdd](https://github.com/SHelfinger/update-motd.d#30-hdd)
 
 [40-memory](https://github.com/SHelfinger/update-motd.d#40-memory)
@@ -46,7 +48,7 @@ Screenshot:
 
 ---
 ### 20-cpu
-This .sh will out all and each core % load. The histogram is User, Nice, System, I/O Wait and Free)
+This .sh will output all and each core % load. The histogram is User, Nice, System, I/O Wait and Free)
 
 Debian output:
 ```shell
@@ -63,6 +65,18 @@ CPU ALL (Load/Idle) [IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 
 Screenshot:
 ![20-cpu](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/20-cpu.png "20-cpu")
+
+---
+### 21-temp
+This .sh will output all the core's temperture. (Remember i7 has not 8 cores! 4 cores, 4 siblings see cat /proc/cpuinfo)
+
+Debian output: 
+```shell
+Core1: 41° Core2: 42° Core3: 40° Core4: 35°
+```
+
+Screenshot:
+![21-temp](https://raw.githubusercontent.com/SHelfinger/update-motd.d/master/images/21-temp.png "21-temp")
 
 ---
 ### 30-hdd
