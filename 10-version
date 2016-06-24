@@ -22,8 +22,17 @@ elif [ "${OS}" = "AIX" ] ; then
 	OSSTR="${OS} `oslevel` (`oslevel -r`)"
 elif [ "${OS}" = "Linux" ] ; then
 	KERNEL=`uname -r`
-	if [ -f /etc/redhat-release ] ; then
-		DIST='RedHat'
+    if [ -f /etc/os-release ] ; then
+    	DIST=`grep NAME= /etc/os-release | cut -d ' ' -f 1- | tr -d '"' | tail -1 | cut -d '=' -f 2- | cut -d ' ' -f 1`
+        TREV=`cat /etc/*_version`
+        if [ -z "$TREV" ] ; then
+        	REV=`grep VERSION= /etc/os-release | cut -d ' ' -f 1 | tr -d 'VERSION="'`
+        else
+        	REV=$TREV
+        fi
+        PSUEDONAME=`grep VERSION= /etc/os-release | cut -d '(' -f 2 | tr -d ')"'`
+	elif [ -f /etc/redhat-release ] ; then
+		DIST=`cat /etc/redhat-release | awk '{print $1}'`
 		PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
 		REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
 	elif [ -f /etc/SUSE-release ] ; then
@@ -34,13 +43,13 @@ elif [ "${OS}" = "Linux" ] ; then
 		PSUEDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
 		REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
 	elif [ -f /etc/debian_version ] ; then
-		DIST="Debian \033[1;33m`cat /etc/debian_version`"
-		REV=""
+		DIST="Debian"
+		REV=`cat /etc/debian_version`
         PSUEDONAME=`dpkg --status tzdata|grep Provides|cut -f2 -d'-'`
 	fi
 	if [ -f /etc/UnitedLinux-release ] ; then
 		DIST="${DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
 	fi
-	OSSTR="\033[1;32m${OS} \033[1;31m${DIST} \033[1;33m${REV}\033[0m(\033[1;34m${PSUEDONAME} \033[1;37m${KERNEL} \033[1;36m${MACH}\033[0m)"
+	OSSTR="\033[1;32m${OS} \033[1;31m${DIST} \033[1;33m${REV} \033[0m(\033[1;34m${PSUEDONAME} \033[1;37m${KERNEL} \033[1;36m${MACH}\033[0m)"
 fi
 echo -e ${OSSTR}

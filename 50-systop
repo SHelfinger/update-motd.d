@@ -12,7 +12,7 @@
 #license		: GPLv3
 #==============================================================================
 LANGUAGE=("\033[01;0mHostname" "\033[01;0mDNS" "\033[01;0mFQDN" "\033[01;0mIP")
-INFO=("\033[1;33m$(hostname -s)" "\033[1;34m$(hostname -d)" "\033[1;31m$(hostname -f)" "\033[1;32m$(hostname -i)")
+INFO=("\033[1;33m$(hostname -s)" "\033[1;34m$(hostname -d)" "\033[1;31m$(hostname -f)" "\033[1;32m$(hostname -i)\033[0m")
 array_size=1
 
 echo -e ${LANGUAGE[0]} ${INFO[0]} ${LANGUAGE[1]} ${INFO[1]} ${LANGUAGE[2]} ${INFO[2]} ${LANGUAGE[3]} ${INFO[3]}
